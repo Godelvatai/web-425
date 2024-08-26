@@ -22,8 +22,7 @@ import { Component } from '@angular/core';
         <div class="highlight">
           <img
             src="/assets/Stand.png"
-            alt="image of a taco stand a guy standing there and a customer ordering a
-taco"
+            alt="image of a taco stand a guy standing there and a customer ordering a taco"
           />
           <p>Welcome to our vibrant taco stand, where every bite is a fiesta! Join us for an unforgettable culinary journey, crafted by our passionate taco artisans. Dive into the freshest flavors in town, where each taco promises a blend of tradition and innovation. Your taste adventure starts here!</p>
         </div>
