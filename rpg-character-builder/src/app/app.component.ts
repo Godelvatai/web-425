@@ -22,7 +22,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
             <li><a routerLink="/players">Players</a></li>
             <li><a routerLink="/create-character">Create Character</a></li>
             <li><a routerLink="/create-guild">Create Guild</a></li>
-            <li><a routerLink="/create-faction">Create Faction</a></li>
+            <li><a routerLink="/character-faction">Character Faction</a></li>
           </ul>
         </nav>
 
@@ -37,7 +37,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
           <a routerLink="/players">Players</a>
           <a routerLink="/create-character">Create Character</a>
           <a routerLink="/create-guild">Create Guild</a>
-          <a routerLink="/create-faction">Create Faction</a>
+          <a routerLink="/character-faction">Character Faction</a>
         </nav>
       </footer>
     </div>
@@ -63,4 +63,5 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   ]
 })
 export class AppComponent {
+  title = 'RPG Character Builder';
 }

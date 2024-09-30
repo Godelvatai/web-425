@@ -4,7 +4,7 @@ import { PlayersComponent } from './players/players.component';
 import { SigninComponent } from './signin/signin.component';
 import { CreateCharacterComponent } from './create-character/create-character.component';
 import { CreateGuildComponent } from './create-guild/create-guild.component';
-import { CreateFactionComponent } from './create-faction/create-faction.component';
+import { CharacterFactionComponent } from './character-faction/character-faction.component';
 
 export const routes: Routes = [
   {
@@ -32,7 +32,7 @@ export const routes: Routes = [
     component: CreateGuildComponent
   },
   {
-    path: 'create-faction',
-    component: CreateFactionComponent
+    path: 'character-faction',
+    component: CharacterFactionComponent
   }
 ];
