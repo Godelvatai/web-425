@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CreateGuildComponent } from './create-guild.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser'
 
 describe('CreateGuildComponent', () => {
   let component: CreateGuildComponent;
@@ -8,7 +9,7 @@ describe('CreateGuildComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CreateGuildComponent]
+      imports: [CreateGuildComponent, ReactiveFormsModule, FormsModule]
     })
     .compileComponents();
 
@@ -19,5 +20,33 @@ describe('CreateGuildComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('form should be invalid when empty', () => {
+    expect(component.createGuildForm.valid).toBeFalsy();
+  });
+
+  it('form should be valid when filled correctly', () => {
+    component.createGuildForm.controls['guildName'].setValue('Adventuring Guild');
+    component.createGuildForm.controls['description'].setValue('Guild for adventurers');
+    component.createGuildForm.controls['type'].setValue('Competitive');
+    component.createGuildForm.controls['acceptTerms'].setValue(true);
+    component.createGuildForm.controls['notificationPreference'].setValue('Email');
+    expect(component.createGuildForm.valid).toBeTruthy();
+  });
+
+  it('should call createGuild on form submit with valid data', () => {
+    spyOn(component, 'createGuild');
+
+    component.createGuildForm.controls['guildName'].setValue('Adventuring Guild');
+    component.createGuildForm.controls['description'].setValue('Guild for adventurers');
+    component.createGuildForm.controls['type'].setValue('Competitive');
+    component.createGuildForm.controls['acceptTerms'].setValue(true);
+    component.createGuildForm.controls['notificationPreference'].setValue('Email');
+    fixture.detectChanges();
+    const form = fixture.debugElement.query(By.css('form'));
+    form.triggerEventHandler('ngSubmit', null);
+
+    expect(component.createGuild).toHaveBeenCalled();
   });
 });

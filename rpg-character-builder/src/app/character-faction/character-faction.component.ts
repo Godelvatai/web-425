@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   imports: [],
   template: `
     <p>
-      create-faction works!
+      character-faction works!
     </p>
   `,
   styles: ``
