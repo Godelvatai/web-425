@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { PlayersComponent } from './players/players.component';
 import { SigninComponent } from './signin/signin.component';
+import { authGuard } from './auth.guard';
 import { CreateCharacterComponent } from './create-character/create-character.component';
 import { CreateGuildComponent } from './create-guild/create-guild.component';
 import { CharacterFactionComponent } from './character-faction/character-faction.component';
@@ -25,7 +26,8 @@ export const routes: Routes = [
   },
   {
     path: 'create-character',
-    component: CreateCharacterComponent
+    component: CreateCharacterComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'create-guild',
