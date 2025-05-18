@@ -34,7 +34,7 @@ describe('CreateCharacterComponent', () => {
     component.selectedGender = 'Female';
     component.selectedClass = 'Mage';
     component.addToCharacterList();
-    const newCharacter = component.characterList.characters[0];
+    const newCharacter = component.characters[0];
 
     expect(newCharacter.id).toBe(12);
     expect(newCharacter.name).toBe('Jane Doe');

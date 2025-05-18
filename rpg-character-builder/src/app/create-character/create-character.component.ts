@@ -5,18 +5,15 @@ export interface Character {
   class: string;
 }
 
-export interface CharacterList {
-  characters: Character[];
-}
-
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CharacterListComponent } from '../character-list/character-list.component';
 
 @Component({
   selector: 'app-create-character',
   standalone: true,
-  imports: [ FormsModule, CommonModule ],
+  imports: [ FormsModule, CommonModule, CharacterListComponent ],
   template: `
     <div class="character-form-container">
       <form class="character-form" #createCharacterForm="ngForm" (ngSubmit)="createNewCharacter();">
@@ -49,21 +46,7 @@ import { CommonModule } from '@angular/common';
       </form>
 
       <div class="character-list">
-        <h1>Newly Created Characters</h1>
-
-        @if (characterList.characters.length > 0) {
-          <ul>
-            @for (character of characterList.characters; track character) {
-              <li>
-                <strong>{{ character.name }}</strong>
-                <br />
-                {{ character.gender }}
-                <br />
-                {{ character.class }}
-              </li>
-            }
-          </ul>
-        }
+        <app-character-list [characters]="characters"></app-character-list>
       </div>
     </div>
   `,
@@ -112,22 +95,24 @@ import { CommonModule } from '@angular/common';
   `
 })
 export class CreateCharacterComponent {
-  characterList: CharacterList;
   genders: string[];
   classes: string[];
   characterId: number;
   name: string;
   selectedGender: string;
   selectedClass: string;
+  characters: Character[];
+
+  @Output() characterList = new EventEmitter<Character[]>();
 
   constructor() {
-    this.characterList = { characters: [] };
     this.classes = [ 'Warrior', 'Rogue', 'Mage' ];
     this.genders = [ 'Male', 'Female', 'Other' ];
     this.characterId = 1;
     this.name = '';
     this.selectedGender = '';
     this.selectedClass = '';
+    this.characters = [];
   }
 
   createNewCharacter() {
@@ -136,12 +121,15 @@ export class CreateCharacterComponent {
   }
 
   addToCharacterList() {
-    this.characterList.characters.push({
+    const newCharacter = {
       id: this.characterId,
       name: this.name,
       gender: this.selectedGender,
       class: this.selectedClass
-    });
+    };
+
+    this.characters.push(newCharacter);
+    this.characterList.emit(this.characters);
     this.resetForm();
   }
 

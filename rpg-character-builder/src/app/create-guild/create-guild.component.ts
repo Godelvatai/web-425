@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } from '@angular/forms';
+import { GuildListComponent } from '../guild-list/guild-list.component';
 
 @Component({
   selector: 'app-create-guild',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ ReactiveFormsModule, CommonModule, GuildListComponent ],
   template: `
     <div class="createGuild-form-container">
       <form [formGroup]="createGuildForm" class="createGuild-form" (ngSubmit)="createGuild(); createGuildForm.reset();">
@@ -40,19 +41,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } fr
       </form>
 
       <div class="guilds">
-        <h1>Created Guilds</h1>
-
-        <div class="guilds-container">
-          @for(guild of createdGuilds; track guild){
-            <div class="guild-card">
-              <h2>Guild Name: {{ guild.guildName }}</h2>
-              <p>Description: {{ guild.description }}</p>
-              <p>Guild Type: {{ guild.type }}</p>
-              <p>Accepted Terms: {{ guild.acceptTerms }}</p>
-              <p>Notification Preference: {{ guild.notificationPreference }}</p>
-            </div>
-          }
-        </div>
+        <app-guild-list [guilds]="createdGuilds"></app-guild-list>
       </div>
     </div>
   `,
@@ -136,7 +125,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, ReactiveFormsModule } fr
 export class CreateGuildComponent {
   guildTypes: string[] = ['Competitive', 'Casual', 'Social', 'Educational'];
   notificationPreferences: string[] = ['Email', 'SMS', 'In-App'];
-  createdGuilds: any;
+  createdGuilds: any[];
 
   createGuildForm: FormGroup = this.fb.group({
     guildName: [null, Validators.compose([Validators.required])],
@@ -145,6 +134,8 @@ export class CreateGuildComponent {
     acceptTerms: [false, Validators.compose([Validators.required])],
     notificationPreference: [null, Validators.compose([Validators.required])]
   });
+
+  @Output() guildList = new EventEmitter<any[]>();
 
   constructor(private fb: FormBuilder) {
     this.createdGuilds = [
@@ -182,5 +173,6 @@ export class CreateGuildComponent {
     };
 
     this.createdGuilds.push(newGuild);
+    this.guildList.emit(this.createdGuilds);
   };
 }
